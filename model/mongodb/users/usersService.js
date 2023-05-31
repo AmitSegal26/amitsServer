@@ -5,16 +5,31 @@ const registerUser = (userData) => {
   return user.save();
 };
 
-const getUserByEmail = (email) => {
-  return User.findOne({ email });
+const getUserById = (id) => {
+  return User.findById(id);
+};
+
+const changeBizStatusOfUser = (id, isBiz) => {
+  let user = User.findById(id);
+  let { isBusiness } = user;
+  isBusiness = !isBusiness;
+  return User.findByIdAndUpdate(id, {
+    $set: { isBusiness: !isBiz },
+  });
 };
 
 const getAllUsers = () => {
   return User.find();
 };
 
+const deleteOneUser = (id) => {
+  return User.findByIdAndDelete(id);
+};
+
 module.exports = {
   registerUser,
-  getUserByEmail,
+  getUserById,
   getAllUsers,
+  deleteOneUser,
+  changeBizStatusOfUser,
 };

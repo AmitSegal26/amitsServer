@@ -3,9 +3,9 @@ const joiIDValidation = require("./joi/idValidation");
 
 const validatorOption = config.get("validatorOption");
 
-const IDValidation = (userInput) => {
+const IDValidation = (id) => {
   if (validatorOption === "Joi") {
-    return joiIDValidation.validateIdSchema(userInput);
+    return joiIDValidation.validateIdSchema({ id });
   }
   throw new Error("validator undefined");
 };

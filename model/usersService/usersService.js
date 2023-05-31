@@ -8,9 +8,9 @@ const registerUser = (userData) => {
   }
 };
 
-const getUserByEmail = (email) => {
+const getUserById = (id) => {
   if (dbOption === "mongo") {
-    return usersServiceMongo.getUserByEmail(email);
+    return usersServiceMongo.getUserById(id);
   }
 };
 
@@ -19,9 +19,21 @@ const getAllUsers = () => {
     return usersServiceMongo.getAllUsers();
   }
 };
+const deleteOneUser = (id) => {
+  if (dbOption === "mongo") {
+    return usersServiceMongo.deleteOneUser(id);
+  }
+};
+const changeBizStatusOfUser = (id, isBiz) => {
+  if (dbOption === "mongo") {
+    return usersServiceMongo.changeBizStatusOfUser(id, isBiz);
+  }
+};
 
 module.exports = {
   registerUser,
-  getUserByEmail,
+  getUserById,
   getAllUsers,
+  deleteOneUser,
+  changeBizStatusOfUser,
 };
