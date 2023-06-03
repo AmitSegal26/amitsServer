@@ -31,6 +31,7 @@ router.get("/", async (req, res) => {
 });
 
 //authed
+//get liked cards of user
 router.get("/get-card-likes", authmw, async (req, res) => {
   try {
     let userCardsArr = [];
@@ -57,6 +58,7 @@ router.get("/get-card-likes", authmw, async (req, res) => {
 });
 
 //authed
+//like\remove like a card
 router.patch("/card-like/:id", authmw, async (req, res) => {
   try {
     let cardId = req.params.id;

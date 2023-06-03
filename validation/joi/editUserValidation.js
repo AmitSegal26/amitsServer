@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const registerSchema = Joi.object({
+const editUserSchema = Joi.object({
   name: Joi.object()
     .keys({
       firstName: Joi.string().min(2).max(256).required(),
@@ -14,13 +14,6 @@ const registerSchema = Joi.object({
   email: Joi.string()
     .regex(
       new RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
-    )
-    .required(),
-  password: Joi.string()
-    .regex(
-      new RegExp(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-      )
     )
     .required(),
   image: Joi.object().keys({
@@ -41,13 +34,12 @@ const registerSchema = Joi.object({
       zip: Joi.number().allow("", 0),
     })
     .required(),
-  isAdmin: Joi.boolean().allow(""),
   isBusiness: Joi.boolean().required(),
 });
 
-const validateRegisterSchema = (userInput) =>
-  registerSchema.validateAsync(userInput);
+const validateEditUserSchema = (userInput) =>
+  editUserSchema.validateAsync(userInput);
 
 module.exports = {
-  validateRegisterSchema,
+  validateEditUserSchema,
 };

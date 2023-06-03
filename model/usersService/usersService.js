@@ -7,6 +7,11 @@ const registerUser = (userData) => {
     return usersServiceMongo.registerUser(userData);
   }
 };
+const getUserByEmail = (userData) => {
+  if (dbOption === "mongo") {
+    return usersServiceMongo.getUserByEmail(userData);
+  }
+};
 
 const getUserById = (id) => {
   if (dbOption === "mongo") {
@@ -29,6 +34,11 @@ const changeBizStatusOfUser = (id, isBiz) => {
     return usersServiceMongo.changeBizStatusOfUser(id, isBiz);
   }
 };
+const updateUserById = (id, newUserData) => {
+  if (dbOption === "mongo") {
+    return usersServiceMongo.updateUserById(id, newUserData);
+  }
+};
 
 module.exports = {
   registerUser,
@@ -36,4 +46,6 @@ module.exports = {
   getAllUsers,
   deleteOneUser,
   changeBizStatusOfUser,
+  updateUserById,
+  getUserByEmail,
 };
