@@ -26,7 +26,6 @@ router.get(
   permissionsMiddleware(false, true, false),
   async (req, res) => {
     try {
-      console.log("here buddy");
       let idOfUserToGetInformationOf;
       if (req.usedOwnId) {
         idOfUserToGetInformationOf = req.userData._id + "";
@@ -104,13 +103,19 @@ router.post("/login", async (req, res) => {
 //http://localhost:8181/api/users/users/:id
 //token
 //edit user
-router.put("/users", authmw, async (req, res) => {
+router.put("/users/:id", authmw, async (req, res) => {
   try {
     let newData = req.body;
+    let { id } = req.params;
+    await IDValidation(id);
     await editUserValidation(newData);
-    const { _id } = req.userData;
+    if (req.userData._id != id) {
+      throw new CustomError("you can edit only your own account");
+    }
     //normalize is in the function itself - updateUserById
+    // console.log("here");
     let newUpdatedUser = await usersServiceModel.updateUserById(_id, newData);
+    //!why does it not continue?
     res.status(200).json(newUpdatedUser);
   } catch (err) {
     res.status(400).json(err);
@@ -124,6 +129,11 @@ router.patch("/users/:id", authmw, async (req, res) => {
   try {
     let { id } = req.params;
     await IDValidation(id);
+    if (id != req.userData._id) {
+      throw new CustomError(
+        "you can invert only your own account business status"
+      );
+    }
     const user = await usersServiceModel.getUserById(id);
     await usersServiceModel.changeBizStatusOfUser(id, user.isBusiness);
     user.isBusiness = !user.isBusiness;
