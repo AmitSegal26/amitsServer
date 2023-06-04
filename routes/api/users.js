@@ -113,9 +113,7 @@ router.put("/users/:id", authmw, async (req, res) => {
       throw new CustomError("you can edit only your own account");
     }
     //normalize is in the function itself - updateUserById
-    // console.log("here");
-    let newUpdatedUser = await usersServiceModel.updateUserById(_id, newData);
-    //!why does it not continue?
+    let newUpdatedUser = await usersServiceModel.updateUserById(id, newData);
     res.status(200).json(newUpdatedUser);
   } catch (err) {
     res.status(400).json(err);
