@@ -18,33 +18,31 @@ const permissionsMiddleware = require("../../middleware/permissionsMiddleware");
 const authmw = require("../../middleware/authMiddleware");
 
 //http://localhost:8181/api/users/users/:id
-//token
+//token for themselves or admin for all users
 //get information about the user
-router.get("/users/:id", authmw, async (req, res) => {
-  try {
-    let idOfUserToGetInformationOf;
-    if (!req.userData.isAdmin && req.params.id != req.userData._id) {
-      //not an admin so not permitted to view a user using params
-      throw new CustomError("you are not permitted to use other user's id");
+router.get(
+  "/users/:id",
+  authmw,
+  permissionsMiddleware(false, true, false),
+  async (req, res) => {
+    try {
+      console.log("here buddy");
+      let idOfUserToGetInformationOf;
+      if (req.usedOwnId) {
+        idOfUserToGetInformationOf = req.userData._id + "";
+      } else {
+        //an admin so can view whatever user they would, like using params
+        idOfUserToGetInformationOf = req.params.id;
+      }
+      const user = await usersServiceModel.getUserById(
+        idOfUserToGetInformationOf
+      );
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(400).json(err);
     }
-    if (!req.userData.isAdmin && req.params.id == req.userData._id) {
-      //not an admin and did not use params so they may continue
-      idOfUserToGetInformationOf = req.userData._id + "";
-      console.log("USERER", idOfUserToGetInformationOf);
-    } else {
-      //an admin so can view whatever user they would like using params
-      await IDValidation(req.params.id);
-      idOfUserToGetInformationOf = req.params.id;
-      console.log("USERER !editItselfOnly", req.params.id);
-    }
-    const user = await usersServiceModel.getUserById(
-      idOfUserToGetInformationOf
-    );
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(400).json(err);
   }
-});
+);
 
 //http://localhost:8181/api/users/users
 //admin
@@ -110,11 +108,9 @@ router.put("/users", authmw, async (req, res) => {
   try {
     let newData = req.body;
     await editUserValidation(newData);
-    const userData = req.userData;
-    let { _id } = userData;
-    //normalize is in the function itself updateUserById
+    const { _id } = req.userData;
+    //normalize is in the function itself - updateUserById
     let newUpdatedUser = await usersServiceModel.updateUserById(_id, newData);
-    console.log("userDATATA");
     res.status(200).json(newUpdatedUser);
   } catch (err) {
     res.status(400).json(err);
@@ -138,34 +134,26 @@ router.patch("/users/:id", authmw, async (req, res) => {
 });
 
 //http://localhost:8181/api/users/users/:id
+//token for themselves or admin for all users
 router.delete(
   "/users/:id",
   authmw,
   permissionsMiddleware(false, true, false),
   async (req, res) => {
     try {
-      //   let idOfUserToGetInformationOf;
-      // if (!req.userData.isAdmin && req.params.id != req.userData._id) {
-      //   //not an admin so not permitted to view a user using params
-      //   throw new CustomError("you are not permitted to use other user's id");
-      // }
-      // if (!req.userData.isAdmin && req.params.id == req.userData._id) {
-      //   //not an admin and did not use params so they may continue
-      //   idOfUserToGetInformationOf = req.userData._id + "";
-      //   console.log("USERER", idOfUserToGetInformationOf);
-      // } else {
-      //   //an admin so can view whatever user they would like using params
-      //   await IDValidation(req.params.id);
-      //   idOfUserToGetInformationOf = req.params.id;
-      //   console.log("USERER !editItselfOnly", req.params.id);
-      // }
-      // const user = await usersServiceModel.getUserById(
-      //   idOfUserToGetInformationOf
-      // );
-      let { id } = req.params;
-      console.log(id);
-      await IDValidation(id);
-      let user = await usersServiceModel.deleteOneUser(id);
+      let idOfUserToGetInformationOf;
+      if (req.usedOwnId) {
+        idOfUserToGetInformationOf = req.userData._id + "";
+      } else {
+        //an admin so can view whatever user they would, like using params
+        idOfUserToGetInformationOf = req.params.id;
+      }
+      let user = await usersServiceModel.deleteOneUser(
+        idOfUserToGetInformationOf
+      );
+      if (!user) {
+        throw new CustomError("no user found by the id that was given");
+      }
       res.status(200).json(user);
     } catch (err) {
       res.status(400).json(err);
