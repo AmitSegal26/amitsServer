@@ -29,9 +29,9 @@ const deleteOneUser = (id) => {
     return usersServiceMongo.deleteOneUser(id);
   }
 };
-const changeBizStatusOfUser = (id, isBiz) => {
+const changeBizStatusOfUser = (id) => {
   if (dbOption === "mongo") {
-    return usersServiceMongo.changeBizStatusOfUser(id, isBiz);
+    return usersServiceMongo.changeBizStatusOfUser(id);
   }
 };
 const updateUserById = (id, newUserData) => {

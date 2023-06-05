@@ -132,9 +132,7 @@ router.patch("/users/:id", authmw, async (req, res) => {
         "you can invert only your own account business status"
       );
     }
-    const user = await usersServiceModel.getUserById(id);
-    await usersServiceModel.changeBizStatusOfUser(id, user.isBusiness);
-    user.isBusiness = !user.isBusiness;
+    let user = await usersServiceModel.changeBizStatusOfUser(id);
     res.status(200).json(user);
   } catch (err) {
     res.status(400).json(err);

@@ -13,13 +13,12 @@ const getUserByEmail = (email) => {
   return User.findOne({ email });
 };
 
-const changeBizStatusOfUser = (id, isBiz) => {
-  let user = User.findById(id);
-  let { isBusiness } = user;
-  isBusiness = !isBusiness;
-  return User.findByIdAndUpdate(id, {
-    $set: { isBusiness: !isBiz },
-  });
+const changeBizStatusOfUser = (id) => {
+  return User.findByIdAndUpdate(
+    id,
+    [{ $set: { isBusiness: { $eq: [false, "$isBusiness"] } } }],
+    { new: true }
+  );
 };
 
 // const updateUserById = (id, newUserData) => {
