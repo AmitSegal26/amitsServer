@@ -12,6 +12,11 @@ const getAllCards = () => {
     return cardsServiceMongo.getAllCards();
   }
 };
+const getCardsByUserId = (userId) => {
+  if (dbOption === "mongo") {
+    return cardsServiceMongo.getCardsByUserId(userId);
+  }
+};
 
 const getCardById = (id) => {
   if (dbOption === "mongo") {
@@ -42,6 +47,7 @@ module.exports = {
   getAllCards,
   getCardById,
   getCardByBizNumber,
+  getCardsByUserId,
   updateCard,
   deleteCard,
 };

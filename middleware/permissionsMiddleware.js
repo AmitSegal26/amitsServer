@@ -53,6 +53,7 @@ const permissionsMiddleware = (isBiz, isAdmin, isBizOwner) => {
         req.usedOwnId = true;
         return next();
       }
+      throw new CustomError("permissions needed");
     } catch (err) {
       res.status(400).json(err);
     }

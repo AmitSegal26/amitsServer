@@ -21,11 +21,6 @@ const changeBizStatusOfUser = (id) => {
   );
 };
 
-// const updateUserById = (id, newUserData) => {
-//   return User.findByIdAndUpdate(id, newUserData, { new: true });
-//   //!fix
-// };
-
 const updateUserById = async (id, newUserData) => {
   //normalize card
   return User.findByIdAndUpdate(

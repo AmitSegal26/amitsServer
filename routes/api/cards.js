@@ -6,22 +6,13 @@ const cardsValidationService = require("../../validation/cardsValidationService"
 const permissionsMiddleware = require("../../middleware/permissionsMiddleware");
 const authmw = require("../../middleware/authMiddleware");
 const { verifyToken } = require("../../utils/token/tokenService");
+const { IDValidation } = require("../../validation/idValidationService");
+const normalizeCardService = require("../../model/cardsService/helpers/normalizationCardService");
 
-// biz only
-router.post("/", authmw, async (req, res) => {
-  try {
-    await cardsValidationService.createCardValidation(req.body);
-    let normalCard = await normalizeCard(req.body, req.userData._id);
-    const dataFromMongoose = await cardsServiceModel.createCard(normalCard);
-    console.log("dataFromMongoose", dataFromMongoose);
-    res.json({ msg: "ok" });
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
+//get all cards
+//http://localhost:8181/api/cards/cards
 // all
-router.get("/", async (req, res) => {
+router.get("/cards", async (req, res) => {
   try {
     const allCards = await cardsServiceModel.getAllCards();
     res.json(allCards);
@@ -30,6 +21,34 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get all cards of the owning user
+//http://localhost:8181/api/cards/my-cards
+// all
+router.get("/my-cards", authmw, async (req, res) => {
+  try {
+    const usersCards = await cardsServiceModel.getCardsByUserId(
+      req.userData._id
+    );
+    res.json(usersCards);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//get specific card
+//http://localhost:8181/api/cards/cards/:id
+// all
+router.get("/cards/:id", async (req, res) => {
+  try {
+    await IDValidation(req.params.id);
+    const cardFromDB = await cardsServiceModel.getCardById(req.params.id);
+    res.json(cardFromDB);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//http://localhost:8181/api/cards/get-card-likes
 //authed
 //get liked cards of user
 router.get("/get-card-likes", authmw, async (req, res) => {
@@ -57,8 +76,28 @@ router.get("/get-card-likes", authmw, async (req, res) => {
   }
 });
 
-//authed
+//create a new card
+//http://localhost:8181/api/cards/cards
+// biz only
+router.post(
+  "/cards",
+  authmw,
+  permissionsMiddleware(true, false, false),
+  async (req, res) => {
+    try {
+      await cardsValidationService.createCardValidation(req.body);
+      let normalCard = await normalizeCard(req.body, req.userData._id);
+      const dataFromMongoose = await cardsServiceModel.createCard(normalCard);
+      res.json(dataFromMongoose);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
+);
+
 //like\remove like a card
+//http://localhost:8181/api/cards/card-like/:id
+//authed
 router.patch("/card-like/:id", authmw, async (req, res) => {
   try {
     let cardId = req.params.id;
@@ -78,22 +117,14 @@ router.patch("/card-like/:id", authmw, async (req, res) => {
   }
 });
 
-// all
-router.get("/:id", async (req, res) => {
-  try {
-    //! joi validation
-    const cardFromDB = await cardsServiceModel.getCardById(req.params.id);
-    res.json(cardFromDB);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
+//edit a card
+//http://localhost:8181/api/cards/cards/:id
 // admin or biz owner
-router.put("/:id", async (req, res) => {
+router.put("/cards/:id", async (req, res) => {
   try {
-    //! joi validation
+    await cardsValidationService.editCardValidation(req.body);
     //! normalize
+    let normalCard = await normalizeCardService(req.body);
     const cardFromDB = await cardsServiceModel.updateCard(
       req.params.id,
       req.body

@@ -8,7 +8,7 @@ const {
 
 const cardSchema = new mongoose.Schema({
   title: DEFAULT_STRING_SCHEMA_REQUIRED,
-  subTitle: DEFAULT_STRING_SCHEMA_REQUIRED,
+  subtitle: DEFAULT_STRING_SCHEMA_REQUIRED,
   description: { ...DEFAULT_STRING_SCHEMA_REQUIRED, maxLength: 1024 },
   phone: {
     type: String,

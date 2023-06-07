@@ -24,6 +24,10 @@ const updateCard = (id, cardToUpdate) => {
   });
 };
 
+const getCardsByUserId = (userId) => {
+  return Card.find({ user_id: userId });
+};
+
 const deleteCard = (id) => {
   return Card.findByIdAndDelete(id);
 };
@@ -33,6 +37,7 @@ module.exports = {
   getAllCards,
   getCardById,
   getCardByBizNumber,
+  getCardsByUserId,
   updateCard,
   deleteCard,
 };
