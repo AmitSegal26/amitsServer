@@ -6,9 +6,9 @@ const {
 } = require("./helpers/mongooseValidation");
 
 const Name = new mongoose.Schema({
-  firstName: DEFAULT_STRING_SCHEMA_REQUIRED,
-  middleName: DEFAULT_STRING_SCHEMA,
-  lastName: DEFAULT_STRING_SCHEMA_REQUIRED,
+  first: DEFAULT_STRING_SCHEMA_REQUIRED,
+  middle: DEFAULT_STRING_SCHEMA,
+  last: DEFAULT_STRING_SCHEMA_REQUIRED,
 });
 
 module.exports = Name;

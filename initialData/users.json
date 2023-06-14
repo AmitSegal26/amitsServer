@@ -1,8 +1,8 @@
 [
   {
     "name": {
-      "firstName": "john",
-      "lastName": "wich"
+      "first": "john",
+      "last": "wich"
     },
     "phone": "0500000000",
     "email": "john@gmail.com",
@@ -17,8 +17,8 @@
   },
   {
     "name": {
-      "firstName": "john",
-      "lastName": "sinay"
+      "first": "john",
+      "last": "sinay"
     },
     "phone": "0500000000",
     "email": "johnsinay@gmail.com",
@@ -32,8 +32,8 @@
   },
   {
     "name": {
-      "firstName": "kenny",
-      "lastName": "mc"
+      "first": "kenny",
+      "last": "mc"
     },
     "phone": "0500000000",
     "email": "kenny@gmail.com",

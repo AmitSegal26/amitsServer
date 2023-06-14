@@ -9,6 +9,10 @@ const getAllCards = () => {
   return Card.find();
 };
 
+const changeBizNumber = (id, bizNumber) => {
+  return Card.findByIdAndUpdate(id, { bizNumber }, { new: true });
+};
+
 const getCardById = (id) => {
   return Card.findById(id);
 };
@@ -40,4 +44,5 @@ module.exports = {
   getCardsByUserId,
   updateCard,
   deleteCard,
+  changeBizNumber,
 };

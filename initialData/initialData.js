@@ -3,6 +3,7 @@ const cardsService = require("../model/cardsService/cardsService");
 const hashService = require("../utils/hash/hashService");
 const normalizeUser = require("../model/usersService/helpers/normalizationUserService");
 const normalizeCard = require("../model/cardsService/helpers/normalizationCardService");
+const chalk = require("chalk");
 
 const usersData = require("./users.json");
 const cardsData = require("./cards.json");
@@ -28,8 +29,9 @@ const initialData = async () => {
       card = await normalizeCard(card, user_id);
       await cardsService.createCard(card);
     }
+    console.log(chalk.hex("#2eff00")("DATA INITIATED"));
   } catch (err) {
-    console.log("err from initial", err);
+    console.log(chalk.hex("#ff0000")("err from initial", err));
   }
 };
 

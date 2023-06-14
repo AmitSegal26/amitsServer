@@ -12,16 +12,14 @@ const connectToDBService = require("../model/connectToDBService");
 /**
  * Get port from environment and store in Express.
  */
-
 connectToDBService()
   .then(() => {
-    console.log(chalk.cyan.bold("connected to mongo"));
+    console.log(chalk.magenta.bold("connected to mongo"));
   })
   .catch((err) => {
     console.log(chalk.redBright.bold(err));
     process.exit(1);
   });
-
 var port = normalizePort(process.env.PORT || "8181");
 app.set("port", port);
 

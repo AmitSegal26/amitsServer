@@ -24,6 +24,12 @@ const getCardById = (id) => {
   }
 };
 
+const changeBizNumber = (id, bizNumber) => {
+  if (dbOption === "mongo") {
+    return cardsServiceMongo.changeBizNumber(id, bizNumber);
+  }
+};
+
 const getCardByBizNumber = (bizNumber) => {
   if (dbOption === "mongo") {
     return cardsServiceMongo.getCardByBizNumber(bizNumber);
@@ -50,4 +56,5 @@ module.exports = {
   getCardsByUserId,
   updateCard,
   deleteCard,
+  changeBizNumber,
 };

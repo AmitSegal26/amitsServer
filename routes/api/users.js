@@ -8,40 +8,10 @@ const {
 } = require("../../validation/authValidationService");
 const normalizeUser = require("../../model/usersService/helpers/normalizationUserService");
 const usersServiceModel = require("../../model/usersService/usersService");
-const {
-  generateToken,
-  verifyToken,
-} = require("../../utils/token/tokenService");
+const { generateToken } = require("../../utils/token/tokenService");
 const CustomError = require("../../utils/CustomError");
-const { IDValidation } = require("../../validation/idValidationService");
 const permissionsMiddleware = require("../../middleware/permissionsMiddleware");
 const authmw = require("../../middleware/authMiddleware");
-
-//http://localhost:8181/api/users/users/:id
-//token for themselves or admin for all users
-//get information about the user
-router.get(
-  "/users/:id",
-  authmw,
-  permissionsMiddleware(false, true, false),
-  async (req, res) => {
-    try {
-      let idOfUserToGetInformationOf;
-      if (req.usedOwnId) {
-        idOfUserToGetInformationOf = req.userData._id + "";
-      } else {
-        //an admin so can view whatever user they would, like using params
-        idOfUserToGetInformationOf = req.params.id;
-      }
-      const user = await usersServiceModel.getUserById(
-        idOfUserToGetInformationOf
-      );
-      res.status(200).json(user);
-    } catch (err) {
-      res.status(400).json(err);
-    }
-  }
-);
 
 //http://localhost:8181/api/users/users
 //admin
@@ -60,6 +30,26 @@ router.get(
   }
 );
 
+//http://localhost:8181/api/users/users/:id
+//token for themselves or admin for all users
+//get information about the user
+router.get(
+  "/users/:id",
+  authmw,
+  permissionsMiddleware(false, true, false, true),
+  async (req, res) => {
+    try {
+      let user = await usersServiceModel.getUserById(req.params.id);
+      if (!user) {
+        return res.json({ msg: "user not found" });
+      }
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
+);
+
 //http://localhost:8181/api/users/users
 //all
 //register
@@ -68,8 +58,13 @@ router.post("/users", async (req, res) => {
     await registerUserValidation(req.body);
     req.body.password = await hashService.generateHash(req.body.password);
     req.body = normalizeUser(req.body);
-    await usersServiceModel.registerUser(req.body);
-    res.json(req.body);
+    let user = await usersServiceModel.registerUser(req.body);
+    if (!user.password) {
+      throw new CustomError("something went wrong, check the database");
+    }
+    let newUser = JSON.parse(JSON.stringify(user));
+    delete newUser.password;
+    res.json(newUser);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -103,62 +98,55 @@ router.post("/login", async (req, res) => {
 //http://localhost:8181/api/users/users/:id
 //token
 //edit user
-router.put("/users/:id", authmw, async (req, res) => {
-  try {
-    let newData = req.body;
-    let { id } = req.params;
-    await IDValidation(id);
-    await editUserValidation(newData);
-    if (req.userData._id != id) {
-      throw new CustomError("you can edit only your own account");
+router.put(
+  "/users/:id",
+  authmw,
+  permissionsMiddleware(false, false, false, true),
+  // userOwnIdCheckMiddleware(),
+  async (req, res) => {
+    try {
+      let newData = req.body;
+      await editUserValidation(newData);
+      let newUpdatedUser = await usersServiceModel.updateUserById(
+        req.params.id,
+        newData
+      );
+      res.status(200).json(newUpdatedUser);
+    } catch (err) {
+      res.status(400).json(err);
     }
-    //normalize is in the function itself - updateUserById
-    let newUpdatedUser = await usersServiceModel.updateUserById(id, newData);
-    res.status(200).json(newUpdatedUser);
-  } catch (err) {
-    res.status(400).json(err);
   }
-});
+);
 
 //http://localhost:8181/api/users/users/:id
 //token
 //invert isBusiness value (true/false)
-router.patch("/users/:id", authmw, async (req, res) => {
-  try {
-    let { id } = req.params;
-    await IDValidation(id);
-    if (id != req.userData._id) {
-      throw new CustomError(
-        "you can invert only your own account business status"
-      );
+router.patch(
+  "/users/:id",
+  authmw,
+  permissionsMiddleware(false, false, false, true),
+  // userOwnIdCheckMiddleware(),
+  async (req, res) => {
+    try {
+      let user = await usersServiceModel.changeBizStatusOfUser(req.params.id);
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(400).json(err);
     }
-    let user = await usersServiceModel.changeBizStatusOfUser(id);
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(400).json(err);
   }
-});
+);
 
 //http://localhost:8181/api/users/users/:id
 //token for themselves or admin for all users
 router.delete(
   "/users/:id",
   authmw,
-  permissionsMiddleware(false, true, false),
+  permissionsMiddleware(false, true, false, true),
   async (req, res) => {
     try {
-      let idOfUserToGetInformationOf;
-      if (req.usedOwnId) {
-        idOfUserToGetInformationOf = req.userData._id + "";
-      } else {
-        //an admin so can view whatever user they would, like using params
-        idOfUserToGetInformationOf = req.params.id;
-      }
-      let user = await usersServiceModel.deleteOneUser(
-        idOfUserToGetInformationOf
-      );
+      let user = await usersServiceModel.deleteOneUser(req.params.id);
       if (!user) {
-        throw new CustomError("no user found by the id that was given");
+        res.status(204).json({ msg: "no user found by the id that was given" });
       }
       res.status(200).json(user);
     } catch (err) {

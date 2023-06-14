@@ -4,8 +4,8 @@ const validateID = require("../validation/idValidationService");
 
 const checkIfBizOwner = async (iduser, idcard, res, next) => {
   try {
-    await validateID.IDValidation(idcard);
     await validateID.IDValidation(iduser);
+    await validateID.IDValidation(idcard);
     const cardData = await getCardById(idcard);
     if (!cardData) {
       return res.status(400).json({ msg: "card not found" });
@@ -20,18 +20,39 @@ const checkIfBizOwner = async (iduser, idcard, res, next) => {
   }
 };
 
+const checkOwnIdIfAdminIsOptionalForUsingSelfID = async (
+  idUser,
+  idParams,
+  res,
+  next
+) => {
+  try {
+    await validateID.IDValidation(idParams);
+    if (idParams == idUser) {
+      res.send("the user is verified");
+    } else {
+      res.send("the user is NOT verified for using other id");
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 /*
   isBiz = every biz
   isAdmin = is admin
   isBizOwner = biz owner
+  isAdminOptionalForUsingOwnId = indicator of enabling registered user for 
+                                 themselves or admin for everyone
 */
-
-const permissionsMiddleware = (isBiz, isAdmin, isBizOwner) => {
+const permissionsMiddleware = (
+  isBiz,
+  isAdmin,
+  isBizOwner,
+  isAdminOptionalForUsingOwnId = false
+) => {
   return async (req, res, next) => {
     try {
-      if (req.params && req.params.id) {
-        await validateID.IDValidation(req.params.id);
-      }
       if (!req.userData) {
         throw new CustomError("must provide userData");
       }
@@ -41,19 +62,19 @@ const permissionsMiddleware = (isBiz, isAdmin, isBizOwner) => {
       if (isAdmin === req.userData.isAdmin && isAdmin === true) {
         return next();
       }
-      if (isBizOwner === req.userData.isBusiness && isBizOwner === true) {
+      if (isAdminOptionalForUsingOwnId) {
+        return checkOwnIdIfAdminIsOptionalForUsingSelfID(
+          req.userData._id,
+          req.params.id,
+          res,
+          next
+        );
+      }
+      if (isBizOwner === true) {
         return checkIfBizOwner(req.userData._id, req.params.id, res, next);
+      } else {
+        res.status(403).json({ msg: "permissions needed" });
       }
-      if (!req.userData.isAdmin && req.params.id != req.userData._id) {
-        //not an admin so not permitted to view a user using params
-        throw new CustomError("you are not permitted to use other user's id");
-      }
-      if (!req.userData.isAdmin && req.params.id == req.userData._id) {
-        //not an admin and used in params their own id so they may continue
-        req.usedOwnId = true;
-        return next();
-      }
-      throw new CustomError("permissions needed");
     } catch (err) {
       res.status(400).json(err);
     }
