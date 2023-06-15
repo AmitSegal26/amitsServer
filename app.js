@@ -10,14 +10,14 @@ const apiRouter = require("./routes/api");
 
 const app = express();
 
-let colorOfLoggerTopics = "#f46ff0";
-
 app.use(cors());
+
 logger.token("time", () => {
   let a = new Date();
   return a.toTimeString().split(" ")[0];
 });
 
+let colorOfLoggerTopics = "#f46ff0";
 app.use(
   logger(
     chalk.hex("#83c129").bold.underline("Request DETAILS:") +
