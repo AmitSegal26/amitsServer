@@ -29,7 +29,7 @@ const checkOwnIdIfAdminIsOptionalForUsingSelfID = async (
   try {
     await validateID.IDValidation(idParams);
     if (idParams == idUser) {
-      res.send("the user is verified");
+      next();
     } else {
       res.send("the user is NOT verified for using other id");
     }

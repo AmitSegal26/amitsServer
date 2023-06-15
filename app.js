@@ -10,13 +10,30 @@ const apiRouter = require("./routes/api");
 
 const app = express();
 
+let colorOfLoggerTopics = "#f46ff0";
+
 app.use(cors());
+logger.token("time", () => {
+  let a = new Date();
+  return a.toTimeString().split(" ")[0];
+});
+
 app.use(
   logger(
     chalk.hex("#83c129").bold.underline("Request DETAILS:") +
       " " +
       chalk.hex("#f3ff09")(
-        '[:date[clf]] "REST: :method URL: :url HTTP/:http-version" status::status, :res[content-length], ":user-agent"'
+        `${chalk.bgBlue.bold(":time")} ${chalk.hex(colorOfLoggerTopics)(
+          "REST:"
+        )}:method, ${chalk.hex(colorOfLoggerTopics)("URL:")}:url,${chalk.hex(
+          colorOfLoggerTopics
+        )("HTTP:")}:http-version, ${chalk.hex(colorOfLoggerTopics)(
+          "STATUS:"
+        )} :status, ${chalk.hex(colorOfLoggerTopics)(
+          "REQUESTED WITH:"
+        )}:user-agent, ${chalk.hex(colorOfLoggerTopics)(
+          "RESPOND TIME:"
+        )}:response-time ms`
       )
   )
 );
