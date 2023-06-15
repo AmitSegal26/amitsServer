@@ -23,16 +23,20 @@ app.use(
     chalk.hex("#83c129").bold.underline("Request DETAILS:") +
       " " +
       chalk.hex("#f3ff09")(
-        `${chalk.bgBlue.bold(":time")} ${chalk.hex(colorOfLoggerTopics)(
-          "REST:"
-        )}:method, ${chalk.hex(colorOfLoggerTopics)("URL:")}:url,${chalk.hex(
-          colorOfLoggerTopics
-        )("HTTP:")}:http-version, ${chalk.hex(colorOfLoggerTopics)(
-          "STATUS:"
-        )} :status, ${chalk.hex(colorOfLoggerTopics)(
-          "REQUESTED WITH:"
-        )}:user-agent, ${chalk.hex(colorOfLoggerTopics)(
-          "RESPOND TIME:"
+        `${chalk.bold.hex(colorOfLoggerTopics)("\nTIME:")} ${chalk.bgBlue.bold(
+          ":time"
+        )} ${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nREST:"
+        )}:method, ${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nURL:"
+        )}:url,${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nHTTP:"
+        )}:http-version, ${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nSTATUS:"
+        )} :status, ${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nREQUESTED WITH:"
+        )}:user-agent, ${chalk.bold.hex(colorOfLoggerTopics)(
+          "\nRESPOND TIME:"
         )}:response-time ms`
       )
   )
