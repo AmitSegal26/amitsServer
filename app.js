@@ -11,7 +11,19 @@ const apiRouter = require("./routes/api");
 
 const app = express();
 
-app.use(cors());
+//*Hello Checker, enter the url of your needed website to check the server's CORS
+let URLForTheCheckerOfTheProject = "";
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5500",
+      "http://localhost:3000",
+      "http://localhost:8181",
+      URLForTheCheckerOfTheProject,
+    ],
+    optionsSuccessStatus: 200,
+  })
+);
 
 logger.token("time", () => {
   let a = new Date();

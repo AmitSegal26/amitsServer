@@ -1,31 +1,21 @@
 const mongoose = require("mongoose");
-const Image = require("./Image");
-const Address = require("./Address");
+const IMAGE = require("./Image");
+const ADDRESS = require("./Address");
 const {
   URL,
   DEFAULT_STRING_SCHEMA_REQUIRED,
 } = require("./helpers/mongooseValidation");
+const { EMAIL, PHONE, CREATED_AT } = require("../helpersForCardsAndUsers");
 
 const cardSchema = new mongoose.Schema({
   title: DEFAULT_STRING_SCHEMA_REQUIRED,
   subtitle: DEFAULT_STRING_SCHEMA_REQUIRED,
   description: { ...DEFAULT_STRING_SCHEMA_REQUIRED, maxLength: 1024 },
-  phone: {
-    type: String,
-    required: true,
-    match: RegExp(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/),
-  },
-  email: {
-    type: String,
-    require: true,
-    match: RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/),
-    lowercase: true,
-    trim: true,
-    unique: true,
-  },
+  phone: PHONE,
+  email: EMAIL,
   web: URL,
-  image: Image,
-  address: Address,
+  image: IMAGE,
+  address: ADDRESS,
   bizNumber: {
     type: Number,
     minLength: 7,
@@ -34,10 +24,7 @@ const cardSchema = new mongoose.Schema({
     trim: true,
   },
   likes: [String],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  createdAt: CREATED_AT,
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
   },

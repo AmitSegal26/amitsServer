@@ -1,10 +1,11 @@
 const Joi = require("joi");
 
-const loginSchema = Joi.object({
+const idValidateSchema = Joi.object({
   id: Joi.string().hex().required().length(24),
 });
 
-const validateIdSchema = (userInput) => loginSchema.validateAsync(userInput);
+const validateIdSchema = (userInput) =>
+  idValidateSchema.validateAsync(userInput);
 
 module.exports = {
   validateIdSchema,

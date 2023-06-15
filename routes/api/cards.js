@@ -128,7 +128,7 @@ router.patch("/cards/:id", authmw, async (req, res) => {
 });
 
 //!BONUS
-//like\remove like a card
+//Change Biz Number
 //http://localhost:8181/api/cards/changeBizNumber/:id/:newBizNumber
 //authed
 router.patch(
