@@ -1,13 +1,17 @@
 const mongoose = require("mongoose");
-const NAME = require("./Name");
-const ADDRESS = require("./Address");
-const IMAGE = require("./Image");
-const { EMAIL, PHONE, CREATED_AT } = require("../helpersForCardsAndUsers");
+const {
+  Email,
+  Phone,
+  Created_At,
+  Address,
+  Image,
+  Name,
+} = require("../helpersForCardsAndUsers");
 
 const schema = new mongoose.Schema({
-  name: NAME,
-  phone: PHONE,
-  email: EMAIL,
+  name: Name,
+  phone: Phone,
+  email: Email,
   password: {
     type: String,
     required: true,
@@ -15,11 +19,11 @@ const schema = new mongoose.Schema({
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     ),
   },
-  image: IMAGE,
-  address: ADDRESS,
+  image: Image,
+  address: Address,
   isAdmin: { type: Boolean, default: false },
   isBusiness: { type: Boolean, default: false },
-  createdAt: CREATED_AT,
+  createdAt: Created_At,
 });
 
 const User = mongoose.model("users", schema);
