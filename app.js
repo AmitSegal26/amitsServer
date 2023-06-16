@@ -73,6 +73,7 @@ app.use(
   })
 );
 
+//!BONUD - Log ERRORS
 const logsDirectory = path.join(__dirname, "logs");
 
 const writeLogs = (logData, res) => {
@@ -93,6 +94,7 @@ const writeLogs = (logData, res) => {
     });
   }
 };
+//!
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
