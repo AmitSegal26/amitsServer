@@ -68,24 +68,31 @@ app.use(
     for (let morganToken of Object.keys(morganLoggerTokens)) {
       logData += morganLoggerTokens[morganToken] + " ";
     }
-    if (res.statusCode >= 400) {
-      writeLogs(logData);
-    }
+    writeLogs(logData, res);
     return morganData;
   })
 );
 
 const logsDirectory = path.join(__dirname, "logs");
 
-function writeLogs(logData) {
-  const currentDate = new Date().toISOString().split("T")[0];
-  const logFilePath = path.join(logsDirectory, `${currentDate}.log`);
-  fs.appendFile(logFilePath, logData, (err) => {
-    if (err) {
-      console.error("Error writing logs:", err);
-    }
-  });
-}
+const writeLogs = (logData, res) => {
+  if (res && res.statusCode >= 400) {
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    fs.mkdir(logsDirectory, { recursive: true }, (err) => {
+      if (err) {
+        console.error("Error Adding new `logs` Folder", err);
+        return;
+      }
+      const logFilePath = path.join(logsDirectory, `${currentDate}.log`);
+      fs.appendFile(logFilePath, logData + "\n", (errSecond) => {
+        if (errSecond) {
+          console.error("Error writing logs:", errSecond);
+        }
+      });
+    });
+  }
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
