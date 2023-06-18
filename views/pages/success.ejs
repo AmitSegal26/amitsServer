@@ -1,0 +1,84 @@
+<!-- views/success.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google SignIn</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <!-- load bootstrap css -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- load fontawesome -->
+    <style>
+      :root {
+        --degreeOfVibrate: 10deg;
+      }
+      @keyframes moveside {
+        0% {
+          transform: translateX(25px);
+        }
+        50% {
+          transform: translateX(-25px);
+          width: 15vw;
+          box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        }
+        100% {
+          transform: translateX(25px);
+        }
+      }
+      body {
+        padding-top: 70px;
+        cursor: progress;
+      }
+      img:hover {
+        box-shadow: 20px 10px 20px rgb(0 0 0);
+        width: 10.5vw;
+        animation: moveside 2s infinite ease-in-out;
+        cursor: pointer;
+      }
+      img {
+        float: right;
+        width: 10vw;
+        border-radius: 50%;
+        border: 2px solid #000;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        transition: all 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="text-primary text-center">
+          <span class="fa fa-user"></span> Profile Information
+        </h1>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="well">
+              <p>
+                <strong>First Name</strong>: <%= user.name.first %><br />
+                <strong>Last Name</strong>: <%= user.name.last %><br />
+                <img
+                  src="<%= encodeURI(user.image.url) %>"
+                  alt="Profile Picture"
+                />
+                <strong>Email</strong>: <%= user.email %><br />
+                <strong>Phone</strong>: <%= user.phone %><br />
+                <strong>Country</strong>: <%= user.address.country %><br />
+                <strong>City</strong>: <%= user.address.city %><br />
+                <strong>Street</strong>: <%= user.address.street %><br />
+                <strong>House Number</strong>: <%= user.address.houseNumber %>
+              </p>
+            </div>
+            <a class="btn btn-outline-primary" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
