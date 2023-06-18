@@ -126,7 +126,6 @@ app.use("/api", apiRouter);
 
 const passport = require("passport");
 const normalizeUserFromGoogle = require("./model/mongodb/google/normalizeGoogleUser");
-const CustomError = require("./utils/CustomError");
 const { generateHash } = require("./utils/hash/bcrypt");
 var userProfile;
 
