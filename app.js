@@ -6,10 +6,29 @@ const logger = require("morgan");
 const initialData = require("./initialData/initialData");
 const chalk = require("chalk");
 const fs = require("fs");
+const usersModelService = require("./model/usersService/usersService");
 
 const apiRouter = require("./routes/api");
 
 const app = express();
+
+//!LOGIN-RADIUS
+const session = require("express-session");
+
+app.set("view engine", "ejs");
+
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: "SECRET",
+  })
+);
+
+app.get("/", function (req, res) {
+  res.render("pages/auth");
+});
+//!
 
 //*Hello Checker, enter the url of your needed website to check the server's CORS
 let URLForTheCheckerOfTheProject = "";
@@ -95,7 +114,6 @@ const writeLogs = (logData, res) => {
   }
 };
 //!
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -103,6 +121,94 @@ app.use(express.static(path.join(__dirname, "public")));
 initialData();
 app.use("/api", apiRouter);
 
+//!PASSPORT
+/*  PASSPORT SETUP  */
+
+const passport = require("passport");
+const normalizeUserFromGoogle = require("./model/mongodb/google/normalizeGoogleUser");
+const CustomError = require("./utils/CustomError");
+const { generateHash } = require("./utils/hash/bcrypt");
+var userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.set("view engine", "ejs");
+
+app.get("/success", async (req, res) => {
+  try {
+    let normalUser = normalizeUserFromGoogle.normalizeUserFromGoogle(req.user);
+    let userFromDB = await usersModelService.getUserByEmail(normalUser.email);
+    if (!userFromDB || userFromDB == {}) {
+      normalUser.password = await generateHash(normalUser.password);
+      await usersModelService.registerUser(normalUser);
+    }
+    res.render("pages/success", { user: normalUser });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+app.get("/logout", (req, res) => {
+  // console.log(req);
+  req.logout((err) => {
+    if (err) {
+      // Handle any errors that occur during logout
+      console.error("Logout error:", err);
+      // Redirect or send an error response
+      res.status(500).send("Logout failed");
+      return;
+    }
+    // Logout successful, redirect to the home page or any other desired page
+    res.redirect("/");
+  });
+});
+app.get("/error", (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+//!
+
+//!GOOGLE
+/*  Google AUTH  */
+
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const GOOGLE_CLIENT_ID =
+  "707547587231-a541l28svkb1591rvb844162lpc3cr1s.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = "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";
+const PORT = 8181;
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: `http://localhost:${PORT}/auth/google/callback`,
+    },
+    function (accessToken, refreshToken, profile, done) {
+      userProfile = profile;
+      return done(null, userProfile);
+    }
+  )
+);
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/error" }),
+  function (req, res) {
+    // Successful authentication, redirect success.
+    res.redirect("/success");
+  }
+);
+//!
 app.use((req, res, next) => {
   res.status(404).json({ err: "page not found" });
 });
