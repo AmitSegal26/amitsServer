@@ -15,15 +15,41 @@
       body {
         padding-top: 70px;
       }
+      @keyframes btnBigSmall {
+        0% {
+          width: 15vw;
+          height: 10vh;
+        }
+        50% {
+          width: 20vw;
+          height: 12vh;
+          background: #ff9900;
+        }
+        100% {
+          width: 15vw;
+          height: 10vh;
+        }
+      }
+      .custom-animate {
+        align-items: center;
+        padding: 2%;
+        width: 15vw;
+        height: 10vh;
+        border-radius: 10%;
+        animation: 2s infinite ease-in-out btnBigSmall;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="jumbotron text-center text-primary">
-        <h1><span class="fa fa-lock"></span> Social Authentication</h1>
+        <h1><span class="fa fa-lock"></span> Amit's Server Authentication</h1>
         <p>Login or Register with:</p>
-        <a href="/auth/google" class="btn btn-danger"
-          ><span class="fa fa-google"></span> SignIn with Google</a
+        <a
+          href="/auth/google"
+          class="btn btn-warning custom-animate text-center"
+          ><span class="fa fa-google"></span>
+          <span>Sign In with Google</span></a
         >
       </div>
     </div>
