@@ -32,7 +32,6 @@ const handleBlockTime = async (blockedUser) => {
       .catch((err) => {
         throw new CustomError("problem removing block");
       });
-    console.log("dleeted");
   }
 };
 module.exports = { normalizeLoginFailure, handleBlockTime };

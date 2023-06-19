@@ -22,7 +22,6 @@ const getCardByBizNumber = (bizNumber) => {
 };
 
 const updateCard = (id, cardToUpdate) => {
-  //normalize card
   return Card.findByIdAndUpdate(id, cardToUpdate, {
     new: true,
   });

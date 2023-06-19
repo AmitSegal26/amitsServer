@@ -22,7 +22,6 @@ const changeBizStatusOfUser = (id) => {
 };
 
 const updateUserById = async (id, newUserData) => {
-  //normalize card
   return User.findByIdAndUpdate(
     id,
     await normalizationUserService(newUserData),

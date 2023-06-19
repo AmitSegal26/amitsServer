@@ -1,6 +1,3 @@
-// const normalizeGoogUserAfterAuth = (user) => {
-//   let normalizedUserToBeReturnedAndSaved = { name: {} };
-// };
 const _ = require("lodash");
 
 const getRandomCapitalLetter = () => {
@@ -94,31 +91,6 @@ const generateRandomPassword = () => {
         break;
     }
   }
-  //   if (!/\\d/.test(passwordOfUser)) {
-  //     passwordOfUser[_.random(0, passwordOfUser.length - 1)] = getRandomNum();
-  //   }
-  //   if (!/[a-z]/.test(passwordOfUser)) {
-  //     passwordOfUser[_.random(0, passwordOfUser.length - 1)] =
-  //       getRandomSmallLetter();
-  //   }
-  //   if (!/[A-Z]/.test(passwordOfUser)) {
-  //     passwordOfUser[_.random(0, passwordOfUser.length - 1)] =
-  //       getRandomCapitalLetter();
-  //   }
-  //   if (!/[#!@$%^&*-]/.test(passwordOfUser)) {
-  //     let spec = getRandomSpecialChar();
-  //     passwordOfUser[_.random(0, passwordOfUser.length - 1)] = spec;
-  //     console.log("here", spec);
-  //     console.log(passwordOfUser);
-  //   }
-  //   if (
-  //     !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
-  //       passwordOfUser
-  //     )
-  //   ) {
-  //     console.log("yo");
-  //     generateRandomPassword();
-  //   }
   return passwordOfUser;
 };
 const normalizeUserFromGoogle = (userFromGoogle) => {

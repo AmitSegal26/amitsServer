@@ -7,16 +7,11 @@ const initialData = require("./initialData/initialData");
 const chalk = require("chalk");
 const fs = require("fs");
 const usersModelService = require("./model/usersService/usersService");
-
 const apiRouter = require("./routes/api");
-
 const app = express();
-
 //!LOGIN-RADIUS
 const session = require("express-session");
-
 app.set("view engine", "ejs");
-
 app.use(
   session({
     resave: false,
@@ -24,12 +19,10 @@ app.use(
     secret: "SECRET",
   })
 );
-
 app.get("/", function (req, res) {
   res.render("pages/auth");
 });
 //!
-
 //*Hello Checker, enter the url of your needed website to check the server's CORS
 let URLForTheCheckerOfTheProject = "";
 app.use(
@@ -43,12 +36,10 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-
 logger.token("time", () => {
   let a = new Date();
   return a.toTimeString().split(" ")[0];
 });
-
 let colorOfLoggerTopics = "#f46ff0";
 app.use(
   logger((tokens, req, res) => {
@@ -85,20 +76,26 @@ app.use(
         } ms`
       );
     for (let morganToken of Object.keys(morganLoggerTokens)) {
-      logData += morganLoggerTokens[morganToken] + " ";
+      logData +=
+        morganToken.toUpperCase() +
+        ": " +
+        morganLoggerTokens[morganToken] +
+        " ";
     }
-    writeLogs(logData, res);
+    if (
+      morganLoggerTokens.url != "/favicon.ico" ||
+      morganLoggerTokens.method != "GET"
+    ) {
+      writeLogs(logData, res);
+    }
     return morganData;
   })
 );
-
 //!BONUD - Log ERRORS
 const logsDirectory = path.join(__dirname, "logs");
-
 const writeLogs = (logData, res) => {
   if (res && res.statusCode >= 400) {
     const currentDate = new Date().toISOString().split("T")[0];
-
     fs.mkdir(logsDirectory, { recursive: true }, (err) => {
       if (err) {
         console.error("Error Adding new `logs` Folder", err);
@@ -120,20 +117,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 initialData();
 app.use("/api", apiRouter);
-
 //!PASSPORT
-/*  PASSPORT SETUP  */
-
 const passport = require("passport");
 const normalizeUserFromGoogle = require("./model/mongodb/google/normalizeGoogleUser");
 const { generateHash } = require("./utils/hash/bcrypt");
-var userProfile;
-
+let userProfile;
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.set("view engine", "ejs");
-
 app.get("/success", async (req, res) => {
   try {
     let normalUser = normalizeUserFromGoogle.normalizeUserFromGoogle(req.user);
@@ -148,7 +139,6 @@ app.get("/success", async (req, res) => {
   }
 });
 app.get("/logout", (req, res) => {
-  // console.log(req);
   req.logout((err) => {
     if (err) {
       // Handle any errors that occur during logout
@@ -162,19 +152,15 @@ app.get("/logout", (req, res) => {
   });
 });
 app.get("/error", (req, res) => res.send("error logging in"));
-
 passport.serializeUser(function (user, cb) {
   cb(null, user);
 });
-
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 //!
-
 //!GOOGLE
 /*  Google AUTH  */
-
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const GOOGLE_CLIENT_ID =
   "707547587231-a541l28svkb1591rvb844162lpc3cr1s.apps.googleusercontent.com";
@@ -193,12 +179,10 @@ passport.use(
     }
   )
 );
-
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/error" }),
@@ -211,5 +195,4 @@ app.get(
 app.use((req, res, next) => {
   res.status(404).json({ err: "page not found" });
 });
-
 module.exports = app;
