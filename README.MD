@@ -47,13 +47,13 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ## API Documentation
 
-#### **proxy:http://localhost:8181/**
+### **proxy:http://localhost:8181/**
 
-#### **Default URL for proxy: /api**
+### **Default URL for proxy: /api**
 
 ### GET ALL USERS
 
-#### usage: get all users on the DB
+- #### usage: get all users on the DB
 
 - REST Method: [GET]
 - URL End Point Request: [/users/users]
