@@ -47,11 +47,14 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ## API Documentation
 
+### proxy:[http://localhost:8181/]
+
 ### [Title 1]
 
 - REST Method: [GET/POST/PUT/DELETE]
-- URL Request: [URL]
+- URL End Point Request: [URL]
 - Authentication Needed: [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
 - Parameters:
   - [Parameter 1]: [Description of the parameter]
   - [Parameter 2]: [Description of the parameter]
