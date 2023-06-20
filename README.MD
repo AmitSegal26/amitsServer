@@ -47,9 +47,9 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ## API Documentation
 
-#### proxy:http://localhost:8181/
+#### _proxy:http://localhost:8181/_
 
-#### Default URL for proxy: /api
+#### _Default URL for proxy: /api_
 
 ### GET ALL USERS
 
