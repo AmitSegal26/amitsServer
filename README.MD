@@ -4,6 +4,7 @@
 
 - The server runs on port 8181 on localhost.
 - The server utilizes MongoDB as the database.
+- The server initiates an initial data for the DB, as long as there is no data **at all** on the Database
 
 ## Server's Characteristics
 
@@ -95,7 +96,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/users]
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
-  Requirements for body:
+- Requirements for body:
   -object:{
   -name{
   --first: string, min length 2, required
@@ -128,7 +129,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/login]
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
-  Requirements for body:
+- Requirements for body:
   -object:{
   -email: string, email regex (example@email.com), required
   -password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
@@ -143,8 +144,9 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/users/:id]
 - Authentication Needed (token): [Yes]
 - Authorizations Needed: [none]
-  -Params: -- [id]: [the id of the user the api should ask the info for]
-  Requirements for body:
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+- Requirements for body:
   -object:{
   -name{
   --first: string, min length 2, required
@@ -200,86 +202,107 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Params:
   - [id]: [the id of the user the api should ask the info for]
 
-### GET ALL USERS
+### GET ALL CARDS
 
-#### USAGE:
+#### USAGE: Recieve an array containing all the card in the DB
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [GET]
+- URL End Point Request: [/cards/cards]
+- Authentication Needed (token): [No]
+- Authorizations Needed: [none]
 
-### GET ALL USERS
+### GET A SPECIFIC CARD
 
-#### USAGE:
+#### USAGE: Recieve Information of a specific card
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [GET]
+- URL End Point Request: [/cards/cards/:id]
+- Authentication Needed (token): [No]
+- Authorizations Needed: [none]
+- Params:
+  - [id]: [the id of the card the api should ask the info for]
 
-### GET ALL USERS
+### GET USER'S CARDS
 
-#### USAGE:
+#### USAGE: Recieve an array containing all the cards made by specific user provided by token
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [GET]
+- URL End Point Request: [/cards/my-cards]
+- Authentication Needed (token): [Yes(owner)]
+- Authorizations Needed: [none]
 
-### GET ALL USERS
+### CREATE A CARD
 
-#### USAGE:
+#### USAGE: Create a card file into the DB
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [POST]
+- URL End Point Request: [/cards/cards]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [BUSINESS]
+- Requirements for body:
+  -title: string, min length 2, max length 256, required
+  -subtitle: string, min length 2, max length 256, required
+  -email: string, regex of email (example@email.com), required
+  -web: string, regex of url
+  -image{
+  --url: string, must be url, required
+  --alt: string, min length 2, max length 256, required
+  }
+  -address{
+  --state: string, min length 2, max length 256
+  --country: string, min length 2, max length 256, required
+  --city: string, min length 2, max length 256, required
+  --street: string, min length 2, max length 256, required
+  --houseNumber: string, min length 2, max length 256, required
+  --zip: number, required
+  }
 
-### GET ALL USERS
+### EDIT A CARD
 
-#### USAGE:
+#### USAGE: Edit the card's details on the DB
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [PUT]
+- URL End Point Request: [/cards/cards/:id]
+- Authentication Needed (token): [Yes(owner)]
+- Authorizations Needed: [CARD OWNER ONLY]
+- Params:
+  - [id]: [the id of the card the api should ask the info for]
+- Requirements for body:
+  -title: string, min length 2, max length 256, required
+  -subtitle: string, min length 2, max length 256, required
+  -email: string, regex of email (example@email.com), required
+  -web: string, regex of url
+  -image{
+  --url: string, must be url, required
+  --alt: string, min length 2, max length 256, required
+  }
+  -address{
+  --state: string, min length 2, max length 256
+  --country: string, min length 2, max length 256, required
+  --city: string, min length 2, max length 256, required
+  --street: string, min length 2, max length 256, required
+  --houseNumber: string, min length 2, max length 256, required
+  --zip: number, required
+  }
 
-### GET ALL USERS
+### LIKE A CARD
 
-#### USAGE:
+#### USAGE: Adds the id of the provided token into an array of 'likes' property in the card-object
 
-- REST Method: [GET/POST/PUT/DELETE]
-- URL End Point Request: [URL]
-- Authentication Needed (token): [Yes/No]
-- Authorizations Needed: [ADMIN/BUSINESS]
-- Parameters:
-  - [Parameter 1]: [Description of the parameter]
-  - [Parameter 2]: [Description of the parameter]
-  - [Parameter 3]: [Description of the parameter]
-  - ...
+- REST Method: [PATCH]
+- URL End Point Request: [/cards/cards/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [none]
+- Params:
+  - [id]: [the id of the card the api should ask the info for]
+
+### DELETE A CARD
+
+#### USAGE: Delete a card from the DB
+
+- REST Method: [DELETE]
+- URL End Point Request: [/cards/cards/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [ADMIN/OWNER OF CARD]
+- Params:
+  - [id]: [the id of the card the api should ask the info for]
