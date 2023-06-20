@@ -42,13 +42,13 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ## BONUSES INCLUDED
 
-### You may change bizNumber for a card for as long as its not already occupied by another bizCard
+- ### You may change bizNumber for a card for as long as its not already occupied by another bizCard
 
-### You may login or register using the google API using the front page (expanded explanation at the paragraph above)
+- ### You may login or register using the google API using the front page (expanded explanation at the paragraph above)
 
-### For every error hapenning on the server - there will be a document log (.log) including all the errors happened during using the session, each document is made for each date on the calendar
+- ### For every error hapenning on the server - there will be a document log (.log) including all the errors happened during using the session, each document is made for each date on the calendar
 
-### For every 3rd time a user has failed logging into an account using wrong password but for the same email - the email will be blocked from logging in thus email for the duration of 24 hours. this block is saved on the mongoDB, that way the server will block the failed logging user even if the app has crashed and re-established
+- ### For every 3rd time a user has failed logging into an account using wrong password but for the same email - the email will be blocked from logging in thus email for the duration of 24 hours. this block is saved on the mongoDB, that way the server will block the failed logging user even if the app has crashed and re-established
 
 ## API Documentation
 
