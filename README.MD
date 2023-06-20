@@ -47,9 +47,22 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ## API Documentation
 
-### proxy:[http://localhost:8181/]
+#### proxy:http://localhost:8181/
+
+#### Default URL for proxy: /api
+
+### GET ALL USERS
+
+#### usage: get all users on the DB
+
+- REST Method: [GET]
+- URL End Point Request: [/users/users]
+- Authentication Needed: [Yes]
+- Authorizations Needed: [ADMIN]
 
 ### [Title 1]
+
+[Explanation of the API endpoint]
 
 - REST Method: [GET/POST/PUT/DELETE]
 - URL End Point Request: [URL]
@@ -60,5 +73,3 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   - [Parameter 2]: [Description of the parameter]
   - [Parameter 3]: [Description of the parameter]
   - ...
-
-[Explanation of the API endpoint]
