@@ -99,26 +99,26 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Requirements for body:
   - object:{
     - name{
-      -- first: string, min length 2, required
-      -- middle: string, min length 2
-      -- last: string, min length 2, required
-      }
+      - first: string, min length 2, required
+      - middle: string, min length 2
+      - last: string, min length 2, required
+        }
     - email: string, email regex (example@email.com), required
     - phone: string, phone (05X-123456789), required
     - password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
       of the following chars {#?!@$%^&\*-}, required
     - image{
-      -- url: string, must be url, required
-      -- alt: string, min length 2, max length 256, required
-      }
-      -address{
-      -- state: string, min length 2, max length 256
-      -- country: string, min length 2, max length 256, required
-      -- city: string, min length 2, max length 256, required
-      -- street: string, min length 2, max length 256, required
-      -- houseNumber: string, min length 2, max length 256, required
-      -- zip: number, required
-      }
+      - url: string, must be url, required
+      - alt: string, min length 2, max length 256, required
+        }
+        -address{
+      - state: string, min length 2, max length 256
+      - country: string, min length 2, max length 256, required
+      - city: string, min length 2, max length 256, required
+      - street: string, min length 2, max length 256, required
+      - houseNumber: string, min length 2, max length 256, required
+      - zip: number, required
+        }
     - isBusiness: boolean, required}
 
 ### LOGIN USER
@@ -149,22 +149,22 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Requirements for body:
   -object:{
   -name{
-  --first: string, min length 2, required
-  --middle: string, min length 2
-  --last: string, min length 2, required
+  -first: string, min length 2, required
+  -middle: string, min length 2
+  -last: string, min length 2, required
   }
   -phone: string, phone (05X-123456789), required
   -image{
-  --url: string, must be url, required
-  --alt: string, min length 2, max length 256, required
+  -url: string, must be url, required
+  -alt: string, min length 2, max length 256, required
   }
   -address{
-  --state: string, min length 2, max length 256
-  --country: string, min length 2, max length 256, required
-  --city: string, min length 2, max length 256, required
-  --street: string, min length 2, max length 256, required
-  --houseNumber: string, min length 2, max length 256, required
-  --zip: number, required
+  -state: string, min length 2, max length 256
+  -country: string, min length 2, max length 256, required
+  -city: string, min length 2, max length 256, required
+  -street: string, min length 2, max length 256, required
+  -houseNumber: string, min length 2, max length 256, required
+  -zip: number, required
   }
   -isBusiness: boolean, required}
 
@@ -194,7 +194,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 #### USAGE: Delete a user from the DB
 
--- REST Method: [DELETE]
+- REST Method: [DELETE]
 
 - URL End Point Request: [/users/users/:id]
 - Authentication Needed (token): [Yes]
@@ -245,16 +245,16 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   -email: string, regex of email (example@email.com), required
   -web: string, regex of url
   -image{
-  --url: string, must be url, required
-  --alt: string, min length 2, max length 256, required
+  -url: string, must be url, required
+  -alt: string, min length 2, max length 256, required
   }
   -address{
-  --state: string, min length 2, max length 256
-  --country: string, min length 2, max length 256, required
-  --city: string, min length 2, max length 256, required
-  --street: string, min length 2, max length 256, required
-  --houseNumber: string, min length 2, max length 256, required
-  --zip: number, required
+  -state: string, min length 2, max length 256
+  -country: string, min length 2, max length 256, required
+  -city: string, min length 2, max length 256, required
+  -street: string, min length 2, max length 256, required
+  -houseNumber: string, min length 2, max length 256, required
+  -zip: number, required
   }
 
 ### EDIT A CARD
@@ -273,16 +273,16 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   -email: string, regex of email (example@email.com), required
   -web: string, regex of url
   -image{
-  --url: string, must be url, required
-  --alt: string, min length 2, max length 256, required
+  -url: string, must be url, required
+  -alt: string, min length 2, max length 256, required
   }
   -address{
-  --state: string, min length 2, max length 256
-  --country: string, min length 2, max length 256, required
-  --city: string, min length 2, max length 256, required
-  --street: string, min length 2, max length 256, required
-  --houseNumber: string, min length 2, max length 256, required
-  --zip: number, required
+  -state: string, min length 2, max length 256
+  -country: string, min length 2, max length 256, required
+  -city: string, min length 2, max length 256, required
+  -street: string, min length 2, max length 256, required
+  -houseNumber: string, min length 2, max length 256, required
+  -zip: number, required
   }
 
 ### LIKE A CARD
