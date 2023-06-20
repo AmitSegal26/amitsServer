@@ -5,6 +5,11 @@
 - The server runs on port 8181 on localhost.
 - The server utilizes MongoDB as the database.
 
+## Server's Characteristics
+
+- The server is logging in the console for every request is sent through the server, it is written in a way you should be able to read and understand.
+- the server is made for managing the Database with business cards and serve a few commands that will be detailed and explained at the API DOCS.
+
 ## Google API Integration
 
 To use the Google API, follow these steps:
