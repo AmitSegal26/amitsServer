@@ -97,29 +97,29 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
 - Requirements for body:
-  -object:{
-  -name{
-  --first: string, min length 2, required
-  --middle: string, min length 2
-  --last: string, min length 2, required
-  }
-  -email: string, email regex (example@email.com), required
-  -phone: string, phone (05X-123456789), required
-  -password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
-  of the following chars {#?!@$%^&\*-}, required
-  -image{
-  --url: string, must be url, required
-  --alt: string, min length 2, max length 256, required
-  }
-  -address{
-  --state: string, min length 2, max length 256
-  --country: string, min length 2, max length 256, required
-  --city: string, min length 2, max length 256, required
-  --street: string, min length 2, max length 256, required
-  --houseNumber: string, min length 2, max length 256, required
-  --zip: number, required
-  }
-  -isBusiness: boolean, required}
+  - object:{
+    - name{
+      -- first: string, min length 2, required
+      -- middle: string, min length 2
+      -- last: string, min length 2, required
+      }
+    - email: string, email regex (example@email.com), required
+    - phone: string, phone (05X-123456789), required
+    - password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
+      of the following chars {#?!@$%^&\*-}, required
+    - image{
+      -- url: string, must be url, required
+      -- alt: string, min length 2, max length 256, required
+      }
+      -address{
+      -- state: string, min length 2, max length 256
+      -- country: string, min length 2, max length 256, required
+      -- city: string, min length 2, max length 256, required
+      -- street: string, min length 2, max length 256, required
+      -- houseNumber: string, min length 2, max length 256, required
+      -- zip: number, required
+      }
+    - isBusiness: boolean, required}
 
 ### LOGIN USER
 
