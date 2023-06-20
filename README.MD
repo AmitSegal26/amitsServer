@@ -53,20 +53,225 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 
 ### GET ALL USERS
 
-- #### usage: get all users on the DB
+#### USAGE: get all users info on the DB
 
 - REST Method: [GET]
 - URL End Point Request: [/users/users]
-- Authentication Needed: [Yes]
+- Authentication Needed (token): [Yes]
 - Authorizations Needed: [ADMIN]
 
-### [Title 1]
+### GET A USER
 
-[Explanation of the API endpoint]
+#### USAGE: get user info from the DB
+
+- REST Method: [GET]
+- URL End Point Request: [/users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [ADMIN]
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+
+### GET USER THEMSELVES
+
+#### USAGE: get user info from the DB using token info for themselves
+
+- REST Method: [GET]
+- URL End Point Request: [/users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [none]
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+
+### REGISTER USER
+
+#### USAGE: Register a user into the DB
+
+- REST Method: [POST]
+- URL End Point Request: [/users/users]
+- Authentication Needed (token): [No]
+- Authorizations Needed: [none]
+  Requirements for body:
+  -object:{
+  -name{
+  --first: string, min length 2, required
+  --middle: string, min length 2
+  --last: string, min length 2, required
+  }
+  -email: string, email regex (example@email.com), required
+  -phone: string, phone (05X-123456789), required
+  -password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
+  of the following chars {#?!@$%^&\*-}, required
+  -image{
+  --url: string, must be url, required
+  --alt: string, min length 2, max length 256, required
+  }
+  -address{
+  --state: string, min length 2, max length 256
+  --country: string, min length 2, max length 256, required
+  --city: string, min length 2, max length 256, required
+  --street: string, min length 2, max length 256, required
+  --houseNumber: string, min length 2, max length 256, required
+  --zip: number, required
+  }
+  -isBusiness: boolean, required}
+
+### LOGIN USER
+
+#### USAGE: Recieve a token from the server for a user
+
+- REST Method: [POST]
+- URL End Point Request: [/users/login]
+- Authentication Needed (token): [No]
+- Authorizations Needed: [none]
+  Requirements for body:
+  -object:{
+  -email: string, email regex (example@email.com), required
+  -password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
+  of the following chars {\*#?!@$%^&-}, required
+  }
+
+### EDIT USER
+
+#### USAGE:Edit the user's own details
+
+- REST Method: [PUT]
+- URL End Point Request: [/users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [none]
+  -Params: -- [id]: [the id of the user the api should ask the info for]
+  Requirements for body:
+  -object:{
+  -name{
+  --first: string, min length 2, required
+  --middle: string, min length 2
+  --last: string, min length 2, required
+  }
+  -phone: string, phone (05X-123456789), required
+  -image{
+  --url: string, must be url, required
+  --alt: string, min length 2, max length 256, required
+  }
+  -address{
+  --state: string, min length 2, max length 256
+  --country: string, min length 2, max length 256, required
+  --city: string, min length 2, max length 256, required
+  --street: string, min length 2, max length 256, required
+  --houseNumber: string, min length 2, max length 256, required
+  --zip: number, required
+  }
+  -isBusiness: boolean, required}
+
+### EDIT BUSINESS STATUS
+
+#### USAGE: Invoke/revoke isBusiness boolean value
+
+- REST Method: [PATCH]
+- URL End Point Request: [users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [none]
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+
+### DELETE USER THEMSELVES
+
+#### USAGE: Delete the user of the given token from the DB
+
+- REST Method: [DELETE]
+- URL End Point Request: [/users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [none]
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+
+### DELETE A USER
+
+#### USAGE: Delete a user from the DB
+
+-- REST Method: [DELETE]
+
+- URL End Point Request: [/users/users/:id]
+- Authentication Needed (token): [Yes]
+- Authorizations Needed: [ADMIN]
+- Params:
+  - [id]: [the id of the user the api should ask the info for]
+
+### GET ALL USERS
+
+#### USAGE:
 
 - REST Method: [GET/POST/PUT/DELETE]
 - URL End Point Request: [URL]
-- Authentication Needed: [Yes/No]
+- Authentication Needed (token): [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
+- Parameters:
+  - [Parameter 1]: [Description of the parameter]
+  - [Parameter 2]: [Description of the parameter]
+  - [Parameter 3]: [Description of the parameter]
+  - ...
+
+### GET ALL USERS
+
+#### USAGE:
+
+- REST Method: [GET/POST/PUT/DELETE]
+- URL End Point Request: [URL]
+- Authentication Needed (token): [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
+- Parameters:
+  - [Parameter 1]: [Description of the parameter]
+  - [Parameter 2]: [Description of the parameter]
+  - [Parameter 3]: [Description of the parameter]
+  - ...
+
+### GET ALL USERS
+
+#### USAGE:
+
+- REST Method: [GET/POST/PUT/DELETE]
+- URL End Point Request: [URL]
+- Authentication Needed (token): [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
+- Parameters:
+  - [Parameter 1]: [Description of the parameter]
+  - [Parameter 2]: [Description of the parameter]
+  - [Parameter 3]: [Description of the parameter]
+  - ...
+
+### GET ALL USERS
+
+#### USAGE:
+
+- REST Method: [GET/POST/PUT/DELETE]
+- URL End Point Request: [URL]
+- Authentication Needed (token): [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
+- Parameters:
+  - [Parameter 1]: [Description of the parameter]
+  - [Parameter 2]: [Description of the parameter]
+  - [Parameter 3]: [Description of the parameter]
+  - ...
+
+### GET ALL USERS
+
+#### USAGE:
+
+- REST Method: [GET/POST/PUT/DELETE]
+- URL End Point Request: [URL]
+- Authentication Needed (token): [Yes/No]
+- Authorizations Needed: [ADMIN/BUSINESS]
+- Parameters:
+  - [Parameter 1]: [Description of the parameter]
+  - [Parameter 2]: [Description of the parameter]
+  - [Parameter 3]: [Description of the parameter]
+  - ...
+
+### GET ALL USERS
+
+#### USAGE:
+
+- REST Method: [GET/POST/PUT/DELETE]
+- URL End Point Request: [URL]
+- Authentication Needed (token): [Yes/No]
 - Authorizations Needed: [ADMIN/BUSINESS]
 - Parameters:
   - [Parameter 1]: [Description of the parameter]
