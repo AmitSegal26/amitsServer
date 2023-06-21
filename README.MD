@@ -96,7 +96,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/users]
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
-- Requirements for body (object) (object):
+- Requirements for body (object):
   - name{
     - first: string, min length 2, required
     - middle: string, min length 2
