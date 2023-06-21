@@ -96,32 +96,29 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/users]
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
-- Requirements for body:
-  - object:
-    {
-    - name{
-      - first: string, min length 2, required
-      - middle: string, min length 2
-      - last: string, min length 2, required
-        }
-    - email: string, email regex (example@email.com), required
-    - phone: string, phone (05X-123456789), required
-    - password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
-      of the following chars {#?!@$%^&\*-}, required
-    - image{
-      - url: string, must be url, required
-      - alt: string, min length 2, max length 256, required
-        }
-        -address{
-      - state: string, min length 2, max length 256
-      - country: string, min length 2, max length 256, required
-      - city: string, min length 2, max length 256, required
-      - street: string, min length 2, max length 256, required
-      - houseNumber: string, min length 2, max length 256, required
-      - zip: number, required
-        }
-    - isBusiness: boolean, required
+- Requirements for body (object) (object):
+  - name{
+    - first: string, min length 2, required
+    - middle: string, min length 2
+    - last: string, min length 2, required
       }
+  - email: string, email regex (example@email.com), required
+  - phone: string, phone (05X-123456789), required
+  - password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
+    of the following chars {#?!@$%^&\*-}, required
+  - image{
+    - url: string, must be url, required
+    - alt: string, min length 2, max length 256, required
+      }
+      -address{
+    - state: string, min length 2, max length 256
+    - country: string, min length 2, max length 256, required
+    - city: string, min length 2, max length 256, required
+    - street: string, min length 2, max length 256, required
+    - houseNumber: string, min length 2, max length 256, required
+    - zip: number, required
+      }
+  - isBusiness: boolean, required
 
 ### LOGIN USER
 
@@ -131,13 +128,10 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/users/login]
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
-- Requirements for body:
-  -object:
-  {
+- Requirements for body (object):
   - email: string, email regex (example@email.com), required
   - password: string, min length 8, must contain: 1 capital letter, 1 small letter, 1 digit and one
     of the following chars {\*#?!@$%^&-}, required
-    }
 
 ### EDIT USER
 
@@ -149,8 +143,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Authorizations Needed: [none]
 - Params:
   - [id]: [the id of the user the api should ask the info for]
-- Requirements for body:
-  - object:{
+- Requirements for body (object):
   - name{
   - first: string, min length 2, required
   - middle: string, min length 2
@@ -170,7 +163,6 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   - zip: number, required
     }
   - isBusiness: boolean, required
-    }
 
 ### EDIT BUSINESS STATUS
 
@@ -243,26 +235,23 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - URL End Point Request: [/cards/cards]
 - Authentication Needed (token): [Yes]
 - Authorizations Needed: [BUSINESS]
-- Requirements for body:
-  - object:
-    {
-    - title: string, min length 2, max length 256, required
-    - subtitle: string, min length 2, max length 256, required
-    - email: string, regex of email (example@email.com), required
-    - web: string, regex of url
-    - image{
-    - url: string, must be url, required
-    - alt: string, min length 2, max length 256, required
-      }
-    - address{
-    - state: string, min length 2, max length 256
-    - country: string, min length 2, max length 256, required
-    - city: string, min length 2, max length 256, required
-    - street: string, min length 2, max length 256, required
-    - houseNumber: string, min length 2, max length 256, required
-    - zip: number, required
-      }
-      }
+- Requirements for body (object):
+  - title: string, min length 2, max length 256, required
+  - subtitle: string, min length 2, max length 256, required
+  - email: string, regex of email (example@email.com), required
+  - web: string, regex of url
+  - image{
+  - url: string, must be url, required
+  - alt: string, min length 2, max length 256, required
+    }
+  - address{
+  - state: string, min length 2, max length 256
+  - country: string, min length 2, max length 256, required
+  - city: string, min length 2, max length 256, required
+  - street: string, min length 2, max length 256, required
+  - houseNumber: string, min length 2, max length 256, required
+  - zip: number, required
+    }
 
 ### EDIT A CARD
 
@@ -274,26 +263,23 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Authorizations Needed: [CARD OWNER ONLY]
 - Params:
   - [id]: [the id of the card the api should ask the info for]
-- Requirements for body:
-  - object:
-    {
-    - title: string, min length 2, max length 256, required
-    - subtitle: string, min length 2, max length 256, required
-    - email: string, regex of email (example@email.com), required
-    - web: string, regex of url
-    - image{
-    - url: string, must be url, required
-    - alt: string, min length 2, max length 256, required
-      }
-    - address{
-    - state: string, min length 2, max length 256
-    - country: string, min length 2, max length 256, required
-    - city: string, min length 2, max length 256, required
-    - street: string, min length 2, max length 256, required
-    - houseNumber: string, min length 2, max length 256, required
-    - zip: number, required
-      }
-      }
+- Requirements for body (object):
+  - title: string, min length 2, max length 256, required
+  - subtitle: string, min length 2, max length 256, required
+  - email: string, regex of email (example@email.com), required
+  - web: string, regex of url
+  - image{
+  - url: string, must be url, required
+  - alt: string, min length 2, max length 256, required
+    }
+  - address{
+  - state: string, min length 2, max length 256
+  - country: string, min length 2, max length 256, required
+  - city: string, min length 2, max length 256, required
+  - street: string, min length 2, max length 256, required
+  - houseNumber: string, min length 2, max length 256, required
+  - zip: number, required
+    }
 
 ### LIKE A CARD
 
