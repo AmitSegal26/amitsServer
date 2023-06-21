@@ -97,6 +97,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
 - Authentication Needed (token): [No]
 - Authorizations Needed: [none]
 - Requirements for body (object):
+
   - name{
     - first: string, min length 2, required
     - middle: string, min length 2
@@ -110,7 +111,7 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
     - url: string, must be url, required
     - alt: string, min length 2, max length 256, required
       }
-      -address{
+  - address{
     - state: string, min length 2, max length 256
     - country: string, min length 2, max length 256, required
     - city: string, min length 2, max length 256, required
@@ -145,23 +146,23 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   - [id]: [the id of the user the api should ask the info for]
 - Requirements for body (object):
   - name{
-  - first: string, min length 2, required
-  - middle: string, min length 2
-  - last: string, min length 2, required
-    }
+    - first: string, min length 2, required
+    - middle: string, min length 2
+    - last: string, min length 2, required
+      }
   - phone: string, phone (05X-123456789), required
   - image{
-  - url: string, must be url, required
-  - alt: string, min length 2, max length 256, required
-    }
+    - url: string, must be url, required
+    - alt: string, min length 2, max length 256, required
+      }
   - address{
-  - state: string, min length 2, max length 256
-  - country: string, min length 2, max length 256, required
-  - city: string, min length 2, max length 256, required
-  - street: string, min length 2, max length 256, required
-  - houseNumber: string, min length 2, max length 256, required
-  - zip: number, required
-    }
+    - state: string, min length 2, max length 256
+    - country: string, min length 2, max length 256, required
+    - city: string, min length 2, max length 256, required
+    - street: string, min length 2, max length 256, required
+    - houseNumber: string, min length 2, max length 256, required
+    - zip: number, required
+      }
   - isBusiness: boolean, required
 
 ### EDIT BUSINESS STATUS
@@ -241,17 +242,17 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   - email: string, regex of email (example@email.com), required
   - web: string, regex of url
   - image{
-  - url: string, must be url, required
-  - alt: string, min length 2, max length 256, required
-    }
+    - url: string, must be url, required
+    - alt: string, min length 2, max length 256, required
+      }
   - address{
-  - state: string, min length 2, max length 256
-  - country: string, min length 2, max length 256, required
-  - city: string, min length 2, max length 256, required
-  - street: string, min length 2, max length 256, required
-  - houseNumber: string, min length 2, max length 256, required
-  - zip: number, required
-    }
+    - state: string, min length 2, max length 256
+    - country: string, min length 2, max length 256, required
+    - city: string, min length 2, max length 256, required
+    - street: string, min length 2, max length 256, required
+    - houseNumber: string, min length 2, max length 256, required
+    - zip: number, required
+      }
 
 ### EDIT A CARD
 
@@ -269,17 +270,17 @@ To access certain endpoints, [AUTHORIZATION known as TOKEN] and [AUTHENTICATION 
   - email: string, regex of email (example@email.com), required
   - web: string, regex of url
   - image{
-  - url: string, must be url, required
-  - alt: string, min length 2, max length 256, required
-    }
+    - url: string, must be url, required
+    - alt: string, min length 2, max length 256, required
+      }
   - address{
-  - state: string, min length 2, max length 256
-  - country: string, min length 2, max length 256, required
-  - city: string, min length 2, max length 256, required
-  - street: string, min length 2, max length 256, required
-  - houseNumber: string, min length 2, max length 256, required
-  - zip: number, required
-    }
+    - state: string, min length 2, max length 256
+    - country: string, min length 2, max length 256, required
+    - city: string, min length 2, max length 256, required
+    - street: string, min length 2, max length 256, required
+    - houseNumber: string, min length 2, max length 256, required
+    - zip: number, required
+      }
 
 ### LIKE A CARD
 
